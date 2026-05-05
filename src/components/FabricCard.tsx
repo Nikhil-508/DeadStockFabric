@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Badge, Button } from "@/components/ui";
+import { Card, Badge, Button, Modal } from "@/components/ui";
 import { useState } from "react";
 
 export type FabricItem = {
@@ -36,11 +36,16 @@ const fabricBadgeVariant = (type: string) => {
 
 export default function FabricCard({ fabric, onClaim }: FabricCardProps) {
   const [claiming, setClaiming] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  const handleClaim = () => {
+  const handleClaimClick = () => {
+    setShowModal(true);
+  };
+
+  const confirmClaim = () => {
     if (claiming) return;
     setClaiming(true);
-    // Trigger optimistic removal in parent immediately
+    setShowModal(false);
     onClaim(fabric.id);
   };
 
@@ -117,7 +122,7 @@ export default function FabricCard({ fabric, onClaim }: FabricCardProps) {
           variant="primary"
           size="md"
           fullWidth
-          onClick={handleClaim}
+          onClick={handleClaimClick}
           disabled={claiming}
           className="group-hover:shadow-md"
         >
@@ -134,6 +139,30 @@ export default function FabricCard({ fabric, onClaim }: FabricCardProps) {
           )}
         </Button>
       </div>
+
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={confirmClaim}
+        title="Confirm Claim"
+        confirmText="Confirm Claim"
+      >
+        <p className="mb-2">Are you sure you want to claim this fabric?</p>
+        <div className="rounded-2xl bg-background p-4 border border-border/50 mt-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-bold text-muted">Item</span>
+            <span className="text-sm font-black text-foreground">{fabric.name}</span>
+          </div>
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-bold text-muted">Yardage</span>
+            <span className="text-sm font-black text-foreground">{fabric.yardage} yds</span>
+          </div>
+          <div className="flex justify-between items-center pt-2 border-t border-border-light">
+            <span className="text-sm font-bold text-muted">Total Price</span>
+            <span className="text-xl font-black text-primary-dark">${fabric.price}</span>
+          </div>
+        </div>
+      </Modal>
     </Card>
   );
 }
