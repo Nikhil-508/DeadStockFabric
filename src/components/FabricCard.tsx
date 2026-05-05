@@ -144,22 +144,26 @@ export default function FabricCard({ fabric, onClaim }: FabricCardProps) {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         onConfirm={confirmClaim}
-        title="Confirm Claim"
+        title="Claim Fabric"
         confirmText="Confirm Claim"
       >
-        <p className="mb-2">Are you sure you want to claim this fabric?</p>
-        <div className="rounded-2xl bg-background p-4 border border-border/50 mt-4">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-bold text-muted">Item</span>
-            <span className="text-sm font-black text-foreground">{fabric.name}</span>
+        <p className="mb-6 text-lg leading-relaxed text-muted">
+          Are you sure you want to claim this premium deadstock roll? 
+          It will be added to your private collection immediately.
+        </p>
+
+        <div className="space-y-4 rounded-3xl bg-background p-6 border border-border/50">
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-bold uppercase tracking-widest text-muted-light">Fabric</span>
+            <span className="text-base font-black text-foreground">{fabric.name}</span>
           </div>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-bold text-muted">Yardage</span>
-            <span className="text-sm font-black text-foreground">{fabric.yardage} yds</span>
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-bold uppercase tracking-widest text-muted-light">Quantity</span>
+            <span className="text-base font-black text-foreground">{fabric.yardage} yds</span>
           </div>
-          <div className="flex justify-between items-center pt-2 border-t border-border-light">
-            <span className="text-sm font-bold text-muted">Total Price</span>
-            <span className="text-xl font-black text-primary-dark">${fabric.price}</span>
+          <div className="flex justify-between items-center pt-4 border-t border-border-light">
+            <span className="text-sm font-bold uppercase tracking-widest text-muted-light">Total Price</span>
+            <span className="text-3xl font-black tracking-tighter text-primary-dark">${fabric.price}</span>
           </div>
         </div>
       </Modal>
