@@ -86,7 +86,14 @@ export default function DashboardPage() {
             ) : fabrics.length > 0 ? (
               fabrics.map((fabric) => (
                 <Card key={fabric.id} padding="sm" className="group flex items-center gap-4 transition-all hover:bg-cream/30 hover:border-primary-muted">
-                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl shadow-inner transition-transform group-hover:scale-105" style={{ background: fabric.image }} />
+                  <div 
+                    className="h-16 w-16 shrink-0 overflow-hidden rounded-xl shadow-inner transition-transform group-hover:scale-105" 
+                    style={{ 
+                      background: fabric.image.startsWith('data:') || fabric.image.startsWith('http') 
+                        ? `url(${fabric.image}) center/cover no-repeat` 
+                        : fabric.image 
+                    }} 
+                  />
                   <div className="flex-1 min-w-0">
                     <h3 className="truncate text-[15px] font-bold text-foreground">{fabric.name}</h3>
                     <div className="mt-1 flex items-center gap-2">
@@ -126,7 +133,14 @@ export default function DashboardPage() {
             ) : claimedFabrics.length > 0 ? (
               claimedFabrics.map((fabric) => (
                 <Card key={fabric.id} padding="sm" className="group flex items-center gap-4 border-dashed border-primary-muted/50 bg-primary-muted/5">
-                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl opacity-80 shadow-sm transition-transform group-hover:scale-105" style={{ background: fabric.image }} />
+                  <div 
+                    className="h-16 w-16 shrink-0 overflow-hidden rounded-xl opacity-80 shadow-sm transition-transform group-hover:scale-105" 
+                    style={{ 
+                      background: fabric.image.startsWith('data:') || fabric.image.startsWith('http') 
+                        ? `url(${fabric.image}) center/cover no-repeat` 
+                        : fabric.image 
+                    }} 
+                  />
                   <div className="flex-1 min-w-0">
                     <h3 className="truncate text-[15px] font-bold text-foreground">{fabric.name}</h3>
                     <div className="mt-1 flex items-center gap-2">
