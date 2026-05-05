@@ -85,23 +85,28 @@ export default function DashboardPage() {
               ))
             ) : fabrics.length > 0 ? (
               fabrics.map((fabric) => (
-                <Card key={fabric.id} padding="sm" className="group flex items-center gap-4 transition-all hover:bg-cream/30 hover:border-primary-muted">
-                  <div 
-                    className="h-16 w-16 shrink-0 overflow-hidden rounded-xl shadow-inner transition-transform group-hover:scale-105" 
-                    style={{ 
-                      background: fabric.image.startsWith('data:') || fabric.image.startsWith('http') 
-                        ? `url(${fabric.image}) center/cover no-repeat` 
-                        : fabric.image 
-                    }} 
-                  />
-                  <div className="flex-1 min-w-0">
-                    <h3 className="truncate text-[15px] font-bold text-foreground">{fabric.name}</h3>
-                    <div className="mt-1 flex items-center gap-2">
-                      <Badge variant="sage" className="text-[10px]">{fabric.fabricType}</Badge>
-                      <span className="text-xs font-medium text-muted-light">${fabric.price}</span>
+                <Card key={fabric.id} padding="sm" className="group flex flex-col sm:flex-row sm:items-center gap-4 transition-all hover:bg-cream/30 hover:border-primary-muted">
+                  <div className="flex items-center gap-4 flex-1 min-w-0">
+                    <div 
+                      className="h-14 w-14 sm:h-16 sm:w-16 shrink-0 overflow-hidden rounded-xl shadow-inner transition-transform group-hover:scale-105" 
+                      style={{ 
+                        background: fabric.image.startsWith('data:') || fabric.image.startsWith('http') 
+                          ? `url(${fabric.image}) center/cover no-repeat` 
+                          : fabric.image 
+                      }} 
+                    />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="truncate text-sm sm:text-[15px] font-bold text-foreground">{fabric.name}</h3>
+                      <div className="mt-0.5 flex items-center gap-2">
+                        <Badge variant="sage" className="text-[9px] sm:text-[10px]">{fabric.fabricType}</Badge>
+                        <span className="text-xs font-medium text-muted-light">${fabric.price}</span>
+                      </div>
                     </div>
                   </div>
-                  <Badge variant="green" dot className="bg-primary-muted/20 text-primary-dark">Active</Badge>
+                  <div className="flex items-center justify-between sm:justify-end border-t border-border-light pt-3 sm:border-0 sm:pt-0">
+                    <Badge variant="green" dot className="bg-primary-muted/20 text-primary-dark">Active</Badge>
+                    <span className="text-[10px] font-bold text-muted-light uppercase tracking-widest sm:hidden">Listing Status</span>
+                  </div>
                 </Card>
               ))
             ) : (
@@ -132,23 +137,28 @@ export default function DashboardPage() {
               ))
             ) : claimedFabrics.length > 0 ? (
               claimedFabrics.map((fabric) => (
-                <Card key={fabric.id} padding="sm" className="group flex items-center gap-4 border-dashed border-primary-muted/50 bg-primary-muted/5">
-                  <div 
-                    className="h-16 w-16 shrink-0 overflow-hidden rounded-xl opacity-80 shadow-sm transition-transform group-hover:scale-105" 
-                    style={{ 
-                      background: fabric.image.startsWith('data:') || fabric.image.startsWith('http') 
-                        ? `url(${fabric.image}) center/cover no-repeat` 
-                        : fabric.image 
-                    }} 
-                  />
-                  <div className="flex-1 min-w-0">
-                    <h3 className="truncate text-[15px] font-bold text-foreground">{fabric.name}</h3>
-                    <div className="mt-1 flex items-center gap-2">
-                      <Badge variant="sky" className="text-[10px]">{fabric.mill}</Badge>
-                      <span className="text-xs font-medium text-muted-light">{fabric.yardage} yds</span>
+                <Card key={fabric.id} padding="sm" className="group flex flex-col sm:flex-row sm:items-center gap-4 border-dashed border-primary-muted/50 bg-primary-muted/5">
+                  <div className="flex items-center gap-4 flex-1 min-w-0">
+                    <div 
+                      className="h-14 w-14 sm:h-16 sm:w-16 shrink-0 overflow-hidden rounded-xl opacity-80 shadow-sm transition-transform group-hover:scale-105" 
+                      style={{ 
+                        background: fabric.image.startsWith('data:') || fabric.image.startsWith('http') 
+                          ? `url(${fabric.image}) center/cover no-repeat` 
+                          : fabric.image 
+                      }} 
+                    />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="truncate text-sm sm:text-[15px] font-bold text-foreground">{fabric.name}</h3>
+                      <div className="mt-0.5 flex items-center gap-2">
+                        <Badge variant="sky" className="text-[9px] sm:text-[10px]">{fabric.mill}</Badge>
+                        <span className="text-xs font-medium text-muted-light">{fabric.yardage} yds</span>
+                      </div>
                     </div>
                   </div>
-                  <Badge variant="cream" className="bg-white border border-border">Owned</Badge>
+                  <div className="flex items-center justify-between sm:justify-end border-t border-border-light pt-3 sm:border-0 sm:pt-0">
+                    <Badge variant="cream" className="bg-white border border-border text-[10px]">Owned</Badge>
+                    <span className="text-[10px] font-bold text-muted-light uppercase tracking-widest sm:hidden">Collection Status</span>
+                  </div>
                 </Card>
               ))
             ) : (
