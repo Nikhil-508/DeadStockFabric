@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "./index";
 
 type ModalProps = {
@@ -24,6 +25,20 @@ export default function Modal({
   cancelText = "Cancel",
   loading = false,
 }: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   // Close on Escape key
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -33,56 +48,46 @@ export default function Modal({
     return () => window.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-[2px] animate-in fade-in duration-300"
+        className="fixed inset-0 bg-black/50 transition-opacity animate-in fade-in duration-200"
         onClick={onClose}
       />
       
       {/* Modal Content */}
-      <div className="relative w-full max-w-lg overflow-hidden rounded-[2rem] bg-white p-10 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] animate-in fade-in zoom-in-95 duration-300 ease-out">
-        {/* Close Button */}
-        <button 
-          onClick={onClose}
-          className="absolute right-6 top-6 rounded-full p-2 text-muted-light transition-colors hover:bg-cream hover:text-foreground"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-        </button>
-
-        <h3 className="mb-6 text-3xl font-black tracking-tighter text-foreground">
-          {title}
-        </h3>
+      <div className="relative w-full max-w-md overflow-hidden rounded-xl bg-white shadow-2xl animate-in fade-in zoom-in-95 duration-200 ease-out">
+        <div className="px-6 py-5 border-b border-gray-100">
+          <h3 className="text-xl font-bold text-gray-900">
+            {title}
+          </h3>
+        </div>
         
-        <div className="mb-10 text-lg text-muted leading-relaxed">
+        <div className="px-6 py-8 text-gray-600 leading-relaxed">
           {children}
         </div>
         
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <Button 
-            variant="ghost" 
-            fullWidth 
-            onClick={onClose}
-            disabled={loading}
-            className="order-2 sm:order-1"
-          >
-            {cancelText}
-          </Button>
-          <Button 
-            variant="primary" 
-            size="lg"
-            fullWidth 
+        <div className="flex justify-end gap-3 bg-gray-50 px-6 py-4">
+          <button 
             onClick={onConfirm}
             disabled={loading}
-            className="order-1 sm:order-2"
+            className="rounded-md bg-red-600 px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
           >
             {loading ? "Processing..." : confirmText}
-          </Button>
+          </button>
+          <button 
+            onClick={onClose}
+            disabled={loading}
+            className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-bold text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+          >
+            {cancelText}
+          </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

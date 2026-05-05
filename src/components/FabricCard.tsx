@@ -147,24 +147,25 @@ export default function FabricCard({ fabric, onClaim }: FabricCardProps) {
         title="Claim Fabric"
         confirmText="Confirm Claim"
       >
-        <p className="mb-6 text-lg leading-relaxed text-muted">
-          Are you sure you want to claim this premium deadstock roll? 
-          It will be added to your private collection immediately.
-        </p>
+        <div className="space-y-4">
+          <p className="text-gray-600">
+            Are you sure you want to claim <span className="font-bold text-gray-900">{fabric.name}</span>?
+          </p>
+          
+          <div className="rounded-lg bg-gray-50 p-4 border border-gray-200">
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-gray-500">Price:</span>
+              <span className="font-bold text-gray-900">${fabric.price}</span>
+            </div>
+            <div className="flex justify-between items-center text-sm mt-1">
+              <span className="text-gray-500">Yardage:</span>
+              <span className="font-bold text-gray-900">{fabric.yardage} yds</span>
+            </div>
+          </div>
 
-        <div className="space-y-4 rounded-3xl bg-background p-6 border border-border/50">
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-bold uppercase tracking-widest text-muted-light">Fabric</span>
-            <span className="text-base font-black text-foreground">{fabric.name}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-bold uppercase tracking-widest text-muted-light">Quantity</span>
-            <span className="text-base font-black text-foreground">{fabric.yardage} yds</span>
-          </div>
-          <div className="flex justify-between items-center pt-4 border-t border-border-light">
-            <span className="text-sm font-bold uppercase tracking-widest text-muted-light">Total Price</span>
-            <span className="text-3xl font-black tracking-tighter text-primary-dark">${fabric.price}</span>
-          </div>
+          <p className="text-xs text-gray-400 italic">
+            This action will move the fabric to your collection.
+          </p>
         </div>
       </Modal>
     </Card>
