@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* ── Core palette: pastel green, cream, soft gray ── */
+  --color-primary: #8fbc8f;
+  --color-primary-light: #b5d8b5;
+  --color-primary-dark: #6a9e6a;
+  --color-primary-muted: #d4e8d4;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-cream: #fdf6ec;
+  --color-cream-dark: #f5e6cc;
+  --color-cream-deeper: #ecdbc0;
+
+  --color-sage: #c8d6c5;
+  --color-sage-dark: #a3b5a0;
+  --color-mint: #d4edda;
+  --color-sky: #c9dde8;
+  --color-sky-dark: #9ec2d6;
+  --color-lavender: #ddd5e9;
+
+  --color-background: #faf9f6;
+  --color-foreground: #2c2c2c;
+  --color-card: #ffffff;
+  --color-card-hover: #fefcf8;
+  --color-muted: #8a8a8a;
+  --color-muted-light: #b0b0b0;
+  --color-border: #e8e4dd;
+  --color-border-light: #f0ede8;
+
+  /* ── Shadows ── */
+  --shadow-soft: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  --shadow-card: 0 2px 8px -2px rgba(0, 0, 0, 0.06), 0 1px 3px -1px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 8px 24px -6px rgba(0, 0, 0, 0.1), 0 2px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-button: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-input-focus: 0 0 0 3px rgba(143, 188, 143, 0.2);
+
+  /* ── Typography ── */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+  /* ── Animations ── */
+  --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-skeleton: skeleton-pulse 1.8s ease-in-out infinite;
+
+  @keyframes pulse {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes skeleton-pulse {
+    0% {
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+
+    50% {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    100% {
+      background-color: rgba(0, 0, 0, 0.03);
+    }
   }
 }
 
+
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), "Inter", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sage);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-sage-dark);
+}
+
+/* ── Focus ring utility ── */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--color-primary-muted);
+  color: var(--color-foreground);
+}
+
+/* ── Utilities ── */
+.skeleton {
+  animation: skeleton-pulse 1.8s ease-in-out infinite;
+  border-radius: 0.5rem;
 }
